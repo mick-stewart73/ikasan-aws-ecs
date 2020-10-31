@@ -62,6 +62,7 @@ Resources:
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
       Parameters:
+        FileSystemName: test
         VpcId: !GetAtt VPC.Outputs.VPC
         MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
 #        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
@@ -89,7 +90,7 @@ Resources:
 #        DesiredCount: 1
 #        Path: /h2
 
-  H2Service:
+  ConfigService:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service/service.yaml
