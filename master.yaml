@@ -57,10 +57,10 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
 
-  EFS:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
+#  EFS:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
 
 #  ProductService:
 #    Type: AWS::CloudFormation::Stack
