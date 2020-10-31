@@ -64,7 +64,7 @@ Resources:
       Parameters:
         VpcId: !GetAtt VPC.Outputs.VPC
         MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
-        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
+#        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
         OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
 
 #  ProductService:
