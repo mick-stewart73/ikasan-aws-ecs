@@ -35,7 +35,7 @@ Resources:
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
         - ContainerName: "ikasan-h2"
-          ContainerPort: 8001
+          ContainerPort: 8082
           TargetGroupArn: !Ref TargetGroup
 
   TaskDefinition:
