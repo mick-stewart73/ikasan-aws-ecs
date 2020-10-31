@@ -67,11 +67,11 @@ Parameters:
     Default: "subnet-0000000000000000"
     AllowedPattern: ^subnet-[a-z0-9]{8,18}$
 
-  MountTarget3Subnet:
-    Type: String
-    Description: Which subnet would you like to use for your third Mount Target? (enter a valid subnet id)
-    Default: "subnet-0000000000000000"
-    AllowedPattern: ^subnet-[a-z0-9]{8,18}$
+#  MountTarget3Subnet:
+#    Type: String
+#    Description: Which subnet would you like to use for your third Mount Target? (enter a valid subnet id)
+#    Default: "subnet-0000000000000000"
+#    AllowedPattern: ^subnet-[a-z0-9]{8,18}$
 
   FileSharePort:
     Type: Number
@@ -156,8 +156,8 @@ Metadata:
         default: "Mount Target 1 Subnet"
       MountTarget2Subnet:
         default: "Mount Target 2 Subnet (optional)"
-      MountTarget3Subnet:
-        default: "Mount Target 3 Subnet (optional)"
+#      MountTarget3Subnet:
+#        default: "Mount Target 3 Subnet (optional)"
       FileSharePort:
         default: "Access Port for FileShare"
       OriginSecurityGroup:
@@ -219,15 +219,15 @@ Resources:
       SubnetId: !Ref MountTarget2Subnet
       SecurityGroups:
         - !Ref MountTargetSecurityGroup
-
-  MountTarget3:
-    Condition: createThirdMountTarget
-    Type: AWS::EFS::MountTarget
-    Properties:
-      FileSystemId: !Ref FileSystem
-      SubnetId: !Ref MountTarget3Subnet
-      SecurityGroups:
-        - !Ref MountTargetSecurityGroup
+#
+#  MountTarget3:
+#    Condition: createThirdMountTarget
+#    Type: AWS::EFS::MountTarget
+#    Properties:
+#      FileSystemId: !Ref FileSystem
+#      SubnetId: !Ref MountTarget3Subnet
+#      SecurityGroups:
+#        - !Ref MountTargetSecurityGroup
 
   MountTargetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -273,11 +273,11 @@ Outputs:
         - '${AWS::StackName}${FileSystemName}MountTarget2'
         - { FileSystemName: !If [hasFsTags, !Ref FileSystemName, "FileSystem"] }
 
-  MountTarget3:
-    Condition: createThirdMountTarget
-    Description: The Resource ID for the third FileSystem Mount Target
-    Value: !Ref MountTarget3
-    Export:
-      Name: !Sub
-        - '${AWS::StackName}${FileSystemName}MountTarget23'
-        - { FileSystemName: !If [hasFsTags, !Ref FileSystemName, "FileSystem"] }
+#  MountTarget3:
+#    Condition: createThirdMountTarget
+#    Description: The Resource ID for the third FileSystem Mount Target
+#    Value: !Ref MountTarget3
+#    Export:
+#      Name: !Sub
+#        - '${AWS::StackName}${FileSystemName}MountTarget23'
+#        - { FileSystemName: !If [hasFsTags, !Ref FileSystemName, "FileSystem"] }
