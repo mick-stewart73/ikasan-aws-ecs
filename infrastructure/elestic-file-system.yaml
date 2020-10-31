@@ -134,7 +134,7 @@ Metadata:
           - VpcId
           - MountTarget1Subnet
           - MountTarget2Subnet
-          - MountTarget3Subnet
+#          - MountTarget3Subnet
           - FileSharePort
           - OriginSecurityGroup
     ParameterLabels:
@@ -186,8 +186,8 @@ Conditions:
   createSecondMountTarget:
     !Not [!Equals [!Ref MountTarget2Subnet, "subnet-0000000000000000"]]
 
-  createThirdMountTarget:
-    !Not [!Equals [!Ref MountTarget3Subnet, "subnet-0000000000000000"]]
+#  createThirdMountTarget:
+#    !Not [!Equals [!Ref MountTarget3Subnet, "subnet-0000000000000000"]]
 
 Resources:
 

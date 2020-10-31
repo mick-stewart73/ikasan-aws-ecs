@@ -61,10 +61,10 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
-    Parameters:
-      VpcId: !GetAtt VPC.Outputs.VPC
-      MountTarget1Subnet: VPC.Outputs.PrivateSubnet1
-      MountTarget2Subnet: VPC.Outputs.PrivateSubnet2
+      Parameters:
+        VpcId: !GetAtt VPC.Outputs.VPC
+        MountTarget1Subnet: VPC.Outputs.PrivateSubnet1
+        MountTarget2Subnet: VPC.Outputs.PrivateSubnet2
 
 #  ProductService:
 #    Type: AWS::CloudFormation::Stack
