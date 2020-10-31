@@ -57,6 +57,11 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
 
+  EFS:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
+
 #  ProductService:
 #    Type: AWS::CloudFormation::Stack
 #    Properties:
@@ -68,16 +73,27 @@ Resources:
 #        Listener: !GetAtt ALB.Outputs.Listener
 #        Path: /products
 
+#  H2Service:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/h2/service.yaml
+#      Parameters:
+#        VPC: !GetAtt VPC.Outputs.VPC
+#        Cluster: !GetAtt ECS.Outputs.Cluster
+#        Listener: !GetAtt ALB.Outputs.Listener
+#        DesiredCount: 1
+#        Path: /h2
+
   H2Service:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/h2/service.yaml
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service/service.yaml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 1
-        Path: /h2
+        Path: /
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
@@ -102,10 +118,14 @@ Resources:
         ECSAutoScalingGroupName: !GetAtt ECS.Outputs.ECSAutoScalingGroupName
 
 Outputs:
-  ProductServiceUrl:
-    Description: The URL endpoint for the product service
-    Value: !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
+#  ProductServiceUrl:
+#    Description: The URL endpoint for the product service
+#    Value: !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
+#
+#  WebsiteServiceUrl:
+#    Description: The URL endpoint for the website service
+#    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]
 
-  WebsiteServiceUrl:
-    Description: The URL endpoint for the website service
+  ConfigServiceUrl:
+    Description: Config servcice URL
     Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]
