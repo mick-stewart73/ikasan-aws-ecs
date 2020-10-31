@@ -77,7 +77,7 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 1
-        Path: /
+        Path: /h2
 
   WebsiteService:
     Type: AWS::CloudFormation::Stack
