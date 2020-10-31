@@ -41,7 +41,7 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: product-service
+      Family: ikasan-h2
       ContainerDefinitions:
         - Name: ikasan-h2
           Essential: true
