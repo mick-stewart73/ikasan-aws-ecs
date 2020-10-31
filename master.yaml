@@ -65,6 +65,7 @@ Resources:
         VpcId: !GetAtt VPC.Outputs.VPC
         MountTarget1Subnet: VPC.Outputs.PrivateSubnet1
         MountTarget2Subnet: VPC.Outputs.PrivateSubnet2
+        OriginSecurityGroup: VPC.Outputs.ECSHostSecurityGroup
 
 #  ProductService:
 #    Type: AWS::CloudFormation::Stack
