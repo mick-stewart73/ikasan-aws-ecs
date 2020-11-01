@@ -24,6 +24,10 @@ Parameters:
     Type: String
     Default: /
 
+  FileSystem:
+    Description: The filesystem to mount
+    Type: String
+
 Resources:
   Service:
     Type: AWS::ECS::Service
