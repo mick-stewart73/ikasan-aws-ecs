@@ -18,7 +18,7 @@ Resources:
   VPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/ecs-refarch-cloudformation/infrastructure/vpc.yaml
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/vpc.yaml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
         VpcCIDR: 10.180.0.0/16
@@ -31,7 +31,7 @@ Resources:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       TemplateURL: !Sub
-        - https://s3.amazonaws.com/ecs-refarch-cloudformation/infrastructure/linux-bastion.yaml
+        - https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/linux-bastion.yaml
         - S3Bucket: 'ikasan-bastion'
           S3Region: 'AWS::Region'
       Parameters:
