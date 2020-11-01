@@ -32,14 +32,8 @@ Resources:
     Properties:
       TemplateURL: !Sub
         - https://s3.amazonaws.com/ecs-refarch-cloudformation/infrastructure/linux-bastion.yaml
-        - S3Bucket: !If
-            - UsingDefaultBucket
-            - !Sub 'aws-quickstart-${AWS::Region}'
-            - !Ref 'QSS3BucketName'
-          S3Region: !If
-            - UsingDefaultBucket
-            - !Ref 'AWS::Region'
-            - !Ref 'QSS3BucketRegion'
+        - S3Bucket: 'ikasan-bastion'
+          S3Region: 'AWS::Region'
       Parameters:
         BastionHostName: 'ikasan-bastion'
         BastionBanner: 'IKASAN AWS STACK'
