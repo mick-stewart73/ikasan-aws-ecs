@@ -93,8 +93,9 @@ Resources:
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299
+      TargetType: ip
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/actuator/health'
+      HealthCheckPath: '/actuator'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
