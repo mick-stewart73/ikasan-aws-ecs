@@ -27,6 +27,41 @@ Resources:
         PrivateSubnet1CIDR: 10.180.24.0/21
         PrivateSubnet2CIDR: 10.180.32.0/21
 
+  BastionStack:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      TemplateURL: !Sub
+        - https://s3.amazonaws.com/ecs-refarch-cloudformation/infrastructure/linux-bastion.yaml
+        - S3Bucket: !If
+            - UsingDefaultBucket
+            - !Sub 'aws-quickstart-${AWS::Region}'
+            - !Ref 'QSS3BucketName'
+          S3Region: !If
+            - UsingDefaultBucket
+            - !Ref 'AWS::Region'
+            - !Ref 'QSS3BucketRegion'
+      Parameters:
+        BastionHostName: 'ikasan-bastion'
+        BastionBanner: 'IKASAN AWS STACK'
+        EnableBanner: 'true'
+        EnableTCPForwarding: 'false'
+        EnableX11Forwarding: 'false'
+        KeyPairName: 'eu-west-1'
+        NumBastionHosts: '1'
+        PublicSubnet1ID: !GetAtt
+          - VPC
+          - Outputs.PublicSubnet1
+        PublicSubnet2ID: !GetAtt
+          - VPC
+          - Outputs.PublicSubnet2
+        QSS3BucketRegion: !Ref 'AWS::Region'
+        QSS3BucketName: 'ikasan-bastion'
+        QSS3KeyPrefix: 'ikasan-linux-bastion'
+        RemoteAccessCIDR: '0.0.0.0/0'
+        VPCID: !GetAtt
+          - VPC
+          - Outputs.VPC
+
   SecurityGroups:
     Type: AWS::CloudFormation::Stack
     Properties:
