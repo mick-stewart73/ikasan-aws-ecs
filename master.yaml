@@ -62,10 +62,10 @@ Resources:
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
       Parameters:
-        FileSystemName: test
+        FileSystemName: ikasan-fs
         VpcId: !GetAtt VPC.Outputs.VPC
         MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
-#        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
+        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
         OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
 
 #  ProductService:
@@ -90,16 +90,16 @@ Resources:
 #        DesiredCount: 1
 #        Path: /h2
 
-  ConfigService:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service/service.yaml
-      Parameters:
-        VPC: !GetAtt VPC.Outputs.VPC
-        Cluster: !GetAtt ECS.Outputs.Cluster
-        Listener: !GetAtt ALB.Outputs.Listener
-        DesiredCount: 1
-        Path: /
+#  ConfigService:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service/service.yaml
+#      Parameters:
+#        VPC: !GetAtt VPC.Outputs.VPC
+#        Cluster: !GetAtt ECS.Outputs.Cluster
+#        Listener: !GetAtt ALB.Outputs.Listener
+#        DesiredCount: 1
+#        Path: /
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
