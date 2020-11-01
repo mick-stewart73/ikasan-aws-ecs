@@ -54,8 +54,8 @@ Resources:
           Essential: true
           Image: hyness/spring-cloud-config-server
           Memory: 256
-          HealthCheck:
-            Command: [ "CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1" ]
+#          HealthCheck:
+#            Command: [ "CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1" ]
           Environment:
             - Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
               Value: 'https://github.com/andrzej-majewski/config-repo'
@@ -92,11 +92,12 @@ Resources:
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299
-      HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/actuator/health'
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 2
+      HealthCheckEnabled: false
+#      HealthCheckIntervalSeconds: 10
+#      HealthCheckPath: '/actuator/health'
+#      HealthCheckProtocol: HTTP
+#      HealthCheckTimeoutSeconds: 5
+#      HealthyThresholdCount: 2
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
