@@ -127,7 +127,7 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 1
-        Path: /config-service
+        Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
         FileSystem: !GetAtt EFS.Outputs.FileSystemId
 
 #  WebsiteService:

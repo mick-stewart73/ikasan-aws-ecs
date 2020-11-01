@@ -86,7 +86,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       VpcId: !Ref VPC
-      Port: 80
+      Port: 8888
       Protocol: HTTP
       Matcher:
         HttpCode: 200-299
