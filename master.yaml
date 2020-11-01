@@ -50,7 +50,7 @@ Resources:
           - Outputs.PublicSubnet2
         QSS3BucketRegion: !Ref 'AWS::Region'
         QSS3BucketName: 'ikasan-bastion'
-        QSS3KeyPrefix: 'ikasan-linux-bastion'
+        QSS3KeyPrefix: 'ikasan-linux-bastion/'
         RemoteAccessCIDR: '0.0.0.0/0'
         VPCID: !GetAtt
           - VPC
