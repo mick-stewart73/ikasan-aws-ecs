@@ -46,6 +46,9 @@ Resources:
         - Name: config-service
           Essential: true
           Image: hyness/spring-cloud-config-server
+          Environment:
+            Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+            Value: 'https://github.com/andrzej-majewski/config-repo'
           Memory: 128
           PortMappings:
             - ContainerPort: 8888
@@ -55,9 +58,16 @@ Resources:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
       Volumes:
-        - Host:
-            SourcePath: "/var/lib/docker/vfs/dir/"
-            Name: "my-vol"
+        - Name: config
+          DockerVolumeConfiguration:
+            Driver: local
+            DriverOpts:
+              type: nfs
+              device: !Sub "${FileSystem}.efs.${AWS::Region}.amazonaws.com:/"
+              o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
+            Labels:
+              foo: ikasan-data
+            Scope: task
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
