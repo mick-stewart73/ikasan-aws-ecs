@@ -533,13 +533,13 @@ Resources:
                 -a exit,always -F arch=b64 -S execve
                 -a exit,always -F arch=b32 -S execve
             /tmp/auditing_configure.sh:
-              source: https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/auditing_configure.sh
+              source: https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/scripts/auditing_configure.sh
               mode: '000550'
               owner: root
               group: root
               authentication: S3AccessCreds
             /tmp/bastion_bootstrap.sh:
-              source: https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/bastion_bootstrap.sh
+              source: https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/scripts/bastion_bootstrap.sh
               mode: '000550'
               owner: root
               group: root
