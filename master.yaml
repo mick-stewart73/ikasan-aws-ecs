@@ -30,10 +30,7 @@ Resources:
   BastionStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub
-        - https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/linux-bastion.yaml
-        - S3Bucket: ikasan-bastion
-          S3Region: AWS::Region
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/linux-bastion.yaml
       Parameters:
         BastionHostName: ikasan-bastion
         BastionBanner: IKASAN AWS STACK
@@ -41,7 +38,7 @@ Resources:
         EnableTCPForwarding: false
         EnableX11Forwarding: false
         KeyPairName: eu-west-1
-        NumBastionHosts: 1
+        NumBastionHosts: 2
         PublicSubnet1ID: !GetAtt
           - VPC
           - Outputs.PublicSubnet1
@@ -80,6 +77,7 @@ Resources:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/ecs-cluster.yaml
       Parameters:
         EnvironmentName: !Ref AWS::StackName
+        KeyName: eu-west-1
         InstanceType: t2.medium
         ClusterSize: 4
         VPC: !GetAtt VPC.Outputs.VPC
