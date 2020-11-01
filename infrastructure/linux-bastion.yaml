@@ -559,9 +559,8 @@ Resources:
                 REGION: !Sub ${AWS::Region}
                 URL_SUFFIX: !Sub ${AWS::URLSuffix}
                 BANNER_REGION: !If [ UsingDefaultBucket, !Ref 'AWS::Region', !Ref 'QSS3BucketRegion' ]
-              command: !Sub
-                - "./bastion_bootstrap.sh --banner ${BannerUrl} --enable ${EnableBanner} --tcp-forwarding ${EnableTCPForwarding} --x11-forwarding ${EnableX11Forwarding}"
-                - BannerUrl: https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/scripts/banner_message.txt
+              command: "./bastion_bootstrap.sh --banner https://ikasan-bastion.s3-eu-west-1.amazonaws.com/ikasan-linux-bastion/scripts/banner_message.txt --enable false --tcp-forwarding ${EnableTCPForwarding} --x11-forwarding ${EnableX11Forwarding}"
+
     Properties:
       AssociatePublicIpAddress: true
       PlacementTenancy: !Ref BastionTenancy
