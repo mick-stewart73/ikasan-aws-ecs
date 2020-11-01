@@ -59,7 +59,7 @@ Resources:
             - !Ref SecurityGroup
           Subnets:
             - !Ref PrivateSubnetOne
-              !Ref PrivateSubnetTwo
+            - !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
         - ContainerName: "config-service"
