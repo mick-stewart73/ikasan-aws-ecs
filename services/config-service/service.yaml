@@ -48,6 +48,9 @@ Resources:
       Family: config-service
       ContainerDefinitions:
         - Name: config-service
+          MountPoints:
+            - SourceVolume: "config"
+              ContainerPath: "/config"
           Essential: true
           Image: hyness/spring-cloud-config-server
           Memory: 128
