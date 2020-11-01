@@ -28,6 +28,22 @@ Parameters:
     Description: The filesystem to mount
     Type: String
 
+  Subnets:
+    Description: Choose which subnets this ECS cluster should be deployed to
+    Type: List<AWS::EC2::Subnet::Id>
+
+  SecurityGroup:
+    Description: Select the Security Group to use for the ECS cluster hosts
+    Type: AWS::EC2::SecurityGroup::Id
+
+  PrivateSubnetOne:
+    Type: AWS::EC2::Subnet::Id
+    Description: Which subnet would you like to use for your first Mount Target?
+
+  PrivateSubnetTwo:
+    Type: AWS::EC2::Subnet::Id
+    Description: Which subnet would you like to use for your first Mount Target?
+
 Resources:
   Service:
     Type: AWS::ECS::Service
@@ -36,6 +52,14 @@ Resources:
       Cluster: !Ref Cluster
       Role: !Ref ServiceRole
       DesiredCount: !Ref DesiredCount
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref SecurityGroup
+          Subnets:
+            - !Ref PrivateSubnetOne
+              !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
         - ContainerName: "config-service"

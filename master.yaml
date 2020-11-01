@@ -129,6 +129,9 @@ Resources:
         DesiredCount: 2
         Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
         FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
