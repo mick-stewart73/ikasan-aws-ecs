@@ -126,7 +126,7 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
-        DesiredCount: 1
+        DesiredCount: 2
         Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
         FileSystem: !GetAtt EFS.Outputs.FileSystemId
 
