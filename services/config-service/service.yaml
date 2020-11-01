@@ -46,6 +46,7 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: config-service
+      NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: config-service
           MountPoints:
@@ -54,7 +55,6 @@ Resources:
           Essential: true
           Image: hyness/spring-cloud-config-server
           Memory: 256
-          NetworkMode: awsvpc
 #          HealthCheck:
 #            Command: [ "CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1" ]
           Environment:
