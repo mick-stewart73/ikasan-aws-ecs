@@ -50,10 +50,10 @@ Resources:
         - Name: config-service
           Essential: true
           Image: hyness/spring-cloud-config-server
-          Environment:
-            Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-            Value: 'https://github.com/andrzej-majewski/config-repo'
           Memory: 128
+          Environment:
+            - Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+              Value: 'https://github.com/andrzej-majewski/config-repo'
           PortMappings:
             - ContainerPort: 8888
           LogConfiguration:
