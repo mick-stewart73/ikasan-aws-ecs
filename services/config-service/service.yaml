@@ -53,7 +53,9 @@ Resources:
               ContainerPath: "/config"
           Essential: true
           Image: hyness/spring-cloud-config-server
-          Memory: 128
+          Memory: 256
+          HealthCheck:
+            Command: [ "CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1" ]
           Environment:
             - Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
               Value: 'https://github.com/andrzej-majewski/config-repo'
@@ -85,16 +87,11 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      VpcId: !Ref VPC
-      Port: 8888
+      TargetType: ip
+      HealthCheckPath: '/actuator/health'
+      Port: 80
       Protocol: HTTP
-      Matcher:
-        HttpCode: 200-299
-      HealthCheckIntervalSeconds: 10
-      HealthCheckPath: /config-service
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 2
+      VpcId: !Ref VPC
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -104,7 +101,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - !Ref Path
+            - '/actuator*'
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
