@@ -49,7 +49,8 @@ Resources:
       ContainerDefinitions:
         - Name: ikasan-h2
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/h2:latest
+#          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/h2:latest
+          Image: adoptopenjdk/openjdk8:jdk8u265-b01-alpine
           Memory: 128
           PortMappings:
             - ContainerPort: 8082
