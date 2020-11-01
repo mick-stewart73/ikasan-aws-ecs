@@ -24,6 +24,10 @@ Parameters:
     Type: String
     Default: /h2
 
+  FileSystem:
+    Description: The filesystem to mount
+    Type: String
+
 Resources:
   Service:
     Type: AWS::ECS::Service
@@ -54,6 +58,17 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
+      Volumes:
+        - Name: data
+          DockerVolumeConfiguration:
+            Driver: local
+            DriverOpts:
+              type: nfs
+              device: !Sub "${FileSystem}.efs.${AWS::Region}.amazonaws.com:/"
+              o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
+            Labels:
+              foo: ikasan-data
+            Scope: task
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup

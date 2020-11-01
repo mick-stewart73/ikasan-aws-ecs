@@ -79,16 +79,17 @@ Resources:
 #        Listener: !GetAtt ALB.Outputs.Listener
 #        Path: /products
 
-#  H2Service:
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/h2/service.yaml
-#      Parameters:
-#        VPC: !GetAtt VPC.Outputs.VPC
-#        Cluster: !GetAtt ECS.Outputs.Cluster
-#        Listener: !GetAtt ALB.Outputs.Listener
-#        DesiredCount: 1
-#        Path: /h2
+  H2Service:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/h2/service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /h2
+        FileSystem: !GetAtt EFS.Outputs.FileSystemId
 
 #  ConfigService:
 #    Type: AWS::CloudFormation::Stack
