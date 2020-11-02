@@ -134,7 +134,7 @@ Resources:
     Type: AWS::ServiceDiscovery::PrivateDnsNamespace
     Properties:
       Name: ikasan.org
-      Vpc: !Ref VCS
+      Vpc: !Ref VPC
 
   DiscoveryService:
     Type: AWS::ServiceDiscovery::Service
