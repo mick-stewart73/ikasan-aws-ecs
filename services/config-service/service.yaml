@@ -66,9 +66,9 @@ Resources:
         - ContainerName: "config-service"
           ContainerPort: 8888
           TargetGroupArn: !Ref TargetGroup
-      ServiceRegistries:
-        - RegistryArn: !Ref DiscoveryService
-          Port: 80
+#      ServiceRegistries:
+#        - RegistryArn: !Ref DiscoveryService
+#          Port: 80
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
