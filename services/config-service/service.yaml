@@ -67,7 +67,7 @@ Resources:
           ContainerPort: 8888
           TargetGroupArn: !Ref TargetGroup
       ServiceRegistries:
-        - RegistryArn: !GetAtt DiscoveryService.Arn
+        - RegistryArn: !Ref DiscoveryService
           Port: 80
 
   TaskDefinition:
