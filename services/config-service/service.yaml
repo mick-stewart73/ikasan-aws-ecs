@@ -41,8 +41,8 @@ Parameters:
     Description: Which subnet would you like to use for your first Mount Target?
 
   DiscoveryService:
-    Type: AWS::ServiceDiscovery::Service::Id
-    Description: The container discovery service
+    Type: String
+    Description: The container discovery service arn
 
 Resources:
   Service:
@@ -66,9 +66,9 @@ Resources:
         - ContainerName: "config-service"
           ContainerPort: 8888
           TargetGroupArn: !Ref TargetGroup
-#      ServiceRegistries:
-#        - RegistryArn: !Ref DiscoveryService
-#          Port: 80
+      ServiceRegistries:
+        - RegistryArn: !Ref DiscoveryService
+          Port: 80
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition

@@ -335,4 +335,4 @@ Outputs:
 
   DiscoveryService:
     Description: The container discovery service
-    Value: !Ref DiscoveryService
+    Value: GetAtt DiscoveryService.Arn
