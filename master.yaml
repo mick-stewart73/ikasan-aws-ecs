@@ -48,6 +48,7 @@ Resources:
         QSS3BucketRegion: !Ref AWS::Region
         QSS3BucketName: ikasan-bastion
         QSS3KeyPrefix: ikasan-linux-bastion/
+#        Currently the bastion host can be accessed from anywhere. This should be restricted.
         RemoteAccessCIDR: 0.0.0.0/0
         VPCID: !GetAtt
           - VPC
