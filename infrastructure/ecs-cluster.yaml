@@ -333,6 +333,6 @@ Outputs:
     Description: A reference to ECS AutoScaling Group Name
     Value: !Ref ECSAutoScalingGroup
 
-    DiscoveryService:
-      Description: A reference to ECS AutoScaling Group Name
-      Value: !Ref DiscoveryService
+  DiscoveryService:
+    Description: The container discovery service
+    Value: !Ref DiscoveryService
