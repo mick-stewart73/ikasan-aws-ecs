@@ -130,6 +130,28 @@ Resources:
                   - /etc/cfn/cfn-hup.conf
                   - /etc/cfn/hooks.d/cfn-auto-reloader.conf
 
+    PrivateNamespace:
+      Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+      Properties:
+        Name: ikasan.org
+        Vpc: !Ref VCS
+
+    DiscoveryService:
+      Type: AWS::ServiceDiscovery::Service
+      Properties:
+        Description: Discovery Service for the Ikasan stack
+        DnsConfig:
+          RoutingPolicy: MULTIVALUE
+          DnsRecords:
+            - TTL: 60
+              Type: A
+            - TTL: 60
+              Type: SRV
+        HealthCheckCustomConfig:
+          FailureThreshold: 1
+        Name: ikasan-service
+        NamespaceId: !Ref PrivateNamespace
+
   # This IAM Role is attached to all of the ECS hosts. It is based on the default role
   # published here:
   # http://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html
@@ -310,3 +332,7 @@ Outputs:
   ECSAutoScalingGroupName:
     Description: A reference to ECS AutoScaling Group Name
     Value: !Ref ECSAutoScalingGroup
+
+    DiscoveryService:
+      Description: A reference to ECS AutoScaling Group Name
+      Value: !Ref DiscoveryService

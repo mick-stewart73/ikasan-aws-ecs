@@ -133,6 +133,7 @@ Resources:
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        DiscoveryService: !GetAtt ECS.Outputs.DiscoveryService
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
