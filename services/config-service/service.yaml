@@ -41,7 +41,7 @@ Parameters:
     Description: Which subnet would you like to use for your first Mount Target?
 
   PrivateNamespace:
-    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Type: String
     Description: The service discovery namespace.
 
 Resources:
