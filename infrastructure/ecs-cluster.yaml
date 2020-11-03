@@ -149,7 +149,7 @@ Resources:
             Type: SRV
       HealthCheckCustomConfig:
         FailureThreshold: 1
-      Name: ikasan-service
+#      Name: ikasan-service
       NamespaceId: !Ref PrivateNamespace
 
   # This IAM Role is attached to all of the ECS hosts. It is based on the default role
