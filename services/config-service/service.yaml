@@ -40,35 +40,52 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
     Description: Which subnet would you like to use for your first Mount Target?
 
-  DiscoveryService:
-    Type: String
-    Description: The container discovery service arn
+  PrivateNamespace:
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Description: The service discovery namespace.
 
-Resources:
-  Service:
-    Type: AWS::ECS::Service
-    DependsOn: ListenerRule
-    Properties:
-      Cluster: !Ref Cluster
-#      Role: !Ref ServiceRole
-      DesiredCount: !Ref DesiredCount
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
-          SecurityGroups:
-            - !Ref SecurityGroup
-          Subnets:
-            - !Ref PrivateSubnetOne
-            - !Ref PrivateSubnetTwo
-      TaskDefinition: !Ref TaskDefinition
-      ServiceName: config-service
-      LoadBalancers:
-        - ContainerName: "config-service"
-          ContainerPort: 8888
-          TargetGroupArn: !Ref TargetGroup
-      ServiceRegistries:
-        - RegistryArn: !Ref DiscoveryService
-          Port: 80
+  Resources:
+
+    DiscoveryService:
+      Type: AWS::ServiceDiscovery::Service
+      Properties:
+        Description: Discovery Service for the Ikasan stack
+        DnsConfig:
+          RoutingPolicy: MULTIVALUE
+          DnsRecords:
+            - TTL: 60
+              Type: A
+            - TTL: 60
+              Type: SRV
+        HealthCheckCustomConfig:
+          FailureThreshold: 1
+        Name: config-service
+        NamespaceId: !Ref PrivateNamespace
+
+    Service:
+      Type: AWS::ECS::Service
+      DependsOn: ListenerRule
+      Properties:
+        Cluster: !Ref Cluster
+  #      Role: !Ref ServiceRole
+        DesiredCount: !Ref DesiredCount
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            AssignPublicIp: DISABLED
+            SecurityGroups:
+              - !Ref SecurityGroup
+            Subnets:
+              - !Ref PrivateSubnetOne
+              - !Ref PrivateSubnetTwo
+        TaskDefinition: !Ref TaskDefinition
+        ServiceName: config-service
+        LoadBalancers:
+          - ContainerName: "config-service"
+            ContainerPort: 8888
+            TargetGroupArn: !Ref TargetGroup
+        ServiceRegistries:
+          - RegistryArn: !GetAtt DiscoveryService.Arn
+            Port: 80
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
