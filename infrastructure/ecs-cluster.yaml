@@ -335,4 +335,4 @@ Outputs:
 
   PrivateNamespace:
     Description: The service discovery namespace
-    Value: !GetAtt PrivateNamespace
+    Value: !Ref PrivateNamespace
