@@ -128,28 +128,28 @@ Resources:
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 2
-        Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
+        Path: /config-server
         FileSystem: !GetAtt EFS.Outputs.FileSystemId
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
-#  ConfigService2:
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service-2/service.yaml
-#      Parameters:
-#        VPC: !GetAtt VPC.Outputs.VPC
-#        Cluster: !GetAtt ECS.Outputs.Cluster
-#        Listener: !GetAtt ALB.Outputs.Listener
-#        DesiredCount: 2
-#        Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
-#        FileSystem: !GetAtt EFS.Outputs.FileSystemId
-#        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
-#        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
-#        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
-#        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+  IkasanSolr:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/ikasan-solr/service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /ikasan-solr
+        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
