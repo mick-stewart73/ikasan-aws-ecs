@@ -143,7 +143,7 @@ Resources:
       Port: 8983
       Protocol: HTTP
       Matcher:
-        HttpCode: 200-299
+        HttpCode: 200-299,401
       TargetType: ip
       HealthCheckIntervalSeconds: 10
       HealthCheckPath: '/solr/ikasan/admin/ping'
