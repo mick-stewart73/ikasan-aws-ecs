@@ -146,7 +146,7 @@ Resources:
         HttpCode: 200-299
       TargetType: ip
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/actuator'
+      HealthCheckPath: '/solr/ikasan/admin/ping'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
@@ -159,7 +159,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - '/actuator*'
+            - '/solr*'
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
