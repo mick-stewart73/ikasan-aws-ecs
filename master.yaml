@@ -38,7 +38,7 @@ Resources:
         EnableTCPForwarding: false
         EnableX11Forwarding: false
         KeyPairName: eu-west-1
-        NumBastionHosts: 2
+        NumBastionHosts: 1
         PublicSubnet1ID: !GetAtt
           - VPC
           - Outputs.PublicSubnet1
@@ -80,7 +80,7 @@ Resources:
         EnvironmentName: !Ref AWS::StackName
         KeyName: eu-west-1
         InstanceType: t2.medium
-        ClusterSize: 4
+        ClusterSize: 2
         VPC: !GetAtt VPC.Outputs.VPC
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
@@ -135,21 +135,21 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
-  ConfigService2:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service-2/service.yaml
-      Parameters:
-        VPC: !GetAtt VPC.Outputs.VPC
-        Cluster: !GetAtt ECS.Outputs.Cluster
-        Listener: !GetAtt ALB.Outputs.Listener
-        DesiredCount: 2
-        Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
-        FileSystem: !GetAtt EFS.Outputs.FileSystemId
-        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
-        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
-        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
-        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+#  ConfigService2:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/config-service-2/service.yaml
+#      Parameters:
+#        VPC: !GetAtt VPC.Outputs.VPC
+#        Cluster: !GetAtt ECS.Outputs.Cluster
+#        Listener: !GetAtt ALB.Outputs.Listener
+#        DesiredCount: 2
+#        Path: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/master.yaml
+#        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+#        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+#        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+#        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+#        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack

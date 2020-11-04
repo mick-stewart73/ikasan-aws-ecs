@@ -104,7 +104,7 @@ Resources:
 #            Command: [ "CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1" ]
           Environment:
             - Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
-              Value: 'https://github.com/andrzej-majewski/config-repo'
+              Value: 'https://github.com/mick-stewart73/config-repo'
           PortMappings:
             - ContainerPort: 8888
           LogConfiguration:
