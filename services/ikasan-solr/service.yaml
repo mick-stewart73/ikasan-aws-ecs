@@ -97,7 +97,7 @@ Resources:
             - SourceVolume: "ikasan-solr-log"
               ContainerPath: "/opt/app/solr/server/logs"
             - SourceVolume: "ikasan-solr-data"
-                ContainerPath: "/opt/index"
+              ContainerPath: "/opt/index"
           Essential: true
           Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/ikasan-solr
           Memory: 512
@@ -120,15 +120,15 @@ Resources:
               name: ikasan-solr-log
             Scope: task
         - Name: ikasan-solr-data
-            DockerVolumeConfiguration:
-              Driver: local
-              DriverOpts:
-                type: nfs
-                device: !Sub "${FileSystem}.efs.${AWS::Region}.amazonaws.com:/"
-                o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
-              Labels:
-                name: ikasan-solr-data
-              Scope: task
+          DockerVolumeConfiguration:
+            Driver: local
+            DriverOpts:
+              type: nfs
+              device: !Sub "${FileSystem}.efs.${AWS::Region}.amazonaws.com:/"
+              o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
+            Labels:
+              name: ikasan-solr-data
+            Scope: task
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
