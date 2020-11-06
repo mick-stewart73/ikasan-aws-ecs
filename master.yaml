@@ -166,7 +166,9 @@ Resources:
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
-    DependsOn: IkasanSolr
+    DependsOn:
+    - IkasanSolr
+    - ConfigService
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
