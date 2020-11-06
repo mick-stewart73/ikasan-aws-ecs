@@ -34,7 +34,7 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 10.180.16.0/21
-        # Allow access to the config server instances from the private subnet
+        # Allow access to the config server instances from the private subnets
         - IpProtocol: tcp
           FromPort: 8888
           ToPort: 8888
@@ -42,6 +42,24 @@ Resources:
         - IpProtocol: tcp
           FromPort: 8888
           ToPort: 8888
+          CidrIp: 10.180.32.0/21
+        # Allow access to the config server instances from the private subnets
+        - IpProtocol: tcp
+          FromPort: 8983
+          ToPort: 8983
+          CidrIp: 10.180.24.0/21
+        - IpProtocol: tcp
+          FromPort: 8983
+          ToPort: 8983
+          CidrIp: 10.180.32.0/21
+          # Allow access to the config server instances from the private subnets
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 10.180.24.0/21
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
           CidrIp: 10.180.32.0/21
       Tags:
         - Key: Name

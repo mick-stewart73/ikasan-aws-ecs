@@ -151,6 +151,23 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
+  IkasanDashboard:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/ikasan-dashboard/service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /ikasan-dashboard
+        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn: ConfigService, IkasanDashboard
+
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack
 #    Properties:
