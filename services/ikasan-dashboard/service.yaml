@@ -109,6 +109,9 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
+          DependsOn:
+            - ContainerName: h2-db
+              Condition: START
         - Name: h2-db
           Essential: true
           Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/h2
