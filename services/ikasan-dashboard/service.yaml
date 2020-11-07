@@ -162,7 +162,7 @@ Resources:
         - Key: stickiness.enabled
           Value: true
         - Key: stickiness.type
-          Value: source_ip
+          Value: lb_cookie
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
