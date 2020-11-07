@@ -158,6 +158,11 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        - Key: stickiness.enabled
+          Value: true
+        - Key: stickiness.type
+          Value: source_ip
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule

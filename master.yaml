@@ -159,7 +159,7 @@ Resources:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
         Listener: !GetAtt ALB.Outputs.Listener
-        DesiredCount: 1
+        DesiredCount: 2
         Path: /ikasan-dashboard
         FileSystem: !GetAtt EFS.Outputs.FileSystemId
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
