@@ -122,6 +122,7 @@ Resources:
             Scope: shared
         - Name: ikasan-solr-data
           DockerVolumeConfiguration:
+            Autoprovision: true
             Driver: local
             DriverOpts:
               type: nfs

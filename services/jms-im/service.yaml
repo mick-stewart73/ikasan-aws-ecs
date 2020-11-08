@@ -129,6 +129,7 @@ Resources:
       Volumes:
         - Name: h2-persistence
           DockerVolumeConfiguration:
+            Autoprovision: true
             Driver: local
             DriverOpts:
               type: nfs
@@ -136,7 +137,7 @@ Resources:
               o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
             Labels:
               name: h2-persistence
-            Scope: task
+            Scope: shared
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
