@@ -99,7 +99,7 @@ Resources:
               ContainerPath: "/config"
           Essential: true
           Image: hyness/spring-cloud-config-server
-          Memory:128
+          Memory: 128
           Environment:
             - Name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
               Value: 'https://github.com/mick-stewart73/config-repo'
