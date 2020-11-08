@@ -151,7 +151,7 @@ Resources:
       Port: 8080
       Protocol: HTTP
       Matcher:
-        HttpCode: 100-599
+        HttpCode: 200-499
       TargetType: ip
       HealthCheckIntervalSeconds: 10
       HealthCheckPath: '/'
