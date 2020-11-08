@@ -43,7 +43,7 @@ Resources:
           FromPort: 8888
           ToPort: 8888
           CidrIp: 10.180.32.0/21
-        # Allow access to the config server instances from the private subnets
+        # Allow access to the solr instances from the private subnets
         - IpProtocol: tcp
           FromPort: 8983
           ToPort: 8983
@@ -52,7 +52,7 @@ Resources:
           FromPort: 8983
           ToPort: 8983
           CidrIp: 10.180.32.0/21
-          # Allow access to the config server instances from the private subnets
+          # Allow access to the ikasan dashboard instances from the private subnets
         - IpProtocol: tcp
           FromPort: 8080
           ToPort: 8080
