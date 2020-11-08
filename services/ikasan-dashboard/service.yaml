@@ -151,10 +151,10 @@ Resources:
       Port: 8080
       Protocol: HTTP
       Matcher:
-        HttpCode: 200-499
+        HttpCode: 200-299
       TargetType: ip
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: '/'
+      HealthCheckPath: '/login'
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
@@ -172,7 +172,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - '/'
+            - '/*'
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
