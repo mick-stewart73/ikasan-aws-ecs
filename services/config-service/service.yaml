@@ -113,6 +113,7 @@ Resources:
       Volumes:
         - Name: config
           DockerVolumeConfiguration:
+            Autoprovision: true
             Driver: local
             DriverOpts:
               type: nfs

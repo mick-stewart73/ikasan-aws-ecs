@@ -129,6 +129,7 @@ Resources:
       Volumes:
         - Name: h2-persistence
           DockerVolumeConfiguration:
+            Autoprovision: true
             Driver: local
             DriverOpts:
               type: nfs

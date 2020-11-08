@@ -111,6 +111,7 @@ Resources:
       Volumes:
         - Name: ikasan-solr-log
           DockerVolumeConfiguration:
+            Autoprovision: true
             Driver: local
             DriverOpts:
               type: nfs
