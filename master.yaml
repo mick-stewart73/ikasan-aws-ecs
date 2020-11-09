@@ -173,6 +173,22 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
+  DashboardH2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/dashboard-h2/service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 2
+        Path: /dashboard-h2
+        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+
   IkasanDashboard:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -191,6 +207,7 @@ Resources:
     DependsOn:
     - IkasanSolr
     - ConfigService
+    - DashboardH2
 
 #  WebsiteService:
 #    Type: AWS::CloudFormation::Stack

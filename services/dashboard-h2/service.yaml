@@ -59,12 +59,12 @@ Resources:
             Type: SRV
       HealthCheckCustomConfig:
         FailureThreshold: 1
-      Name: ikasan-dashboard
+      Name: dashboard-h2
       NamespaceId: !Ref PrivateNamespace
 
   Service:
     Type: AWS::ECS::Service
-    DependsOn: ListenerRule
+#    DependsOn: ListenerRule
     Properties:
       Cluster: !Ref Cluster
       DesiredCount: !Ref DesiredCount
@@ -77,11 +77,11 @@ Resources:
             - !Ref PrivateSubnetOne
             - !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: ikasan-dashboard
-      LoadBalancers:
-        - ContainerName: "ikasan-dashboard"
-          ContainerPort: 8080
-          TargetGroupArn: !Ref TargetGroup
+      ServiceName: dashboard-h2
+#      LoadBalancers:
+#        - ContainerName: "dashboard-h2"
+#          ContainerPort: 8082
+#          TargetGroupArn: !Ref TargetGroup
       ServiceRegistries:
         - RegistryArn: !GetAtt DiscoveryService.Arn
           Port: 80
@@ -89,23 +89,38 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: ikasan-dashboard
+      Family: dashboard-h2
       NetworkMode: awsvpc
       ContainerDefinitions:
-        - Name: ikasan-dashboard
+        - Name: dashboard-h2
+          MountPoints:
+            - SourceVolume: "h2-persistence"
+              ContainerPath: "/opt/data"
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/ikasan-dashboard
-          Memory: 512
+          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/h2
+          Memory: 128
           Environment:
             - Name: MODULE_NAME
-              Value: ikasan-dashboard
+              Value: dashboard-h2
           PortMappings:
-            - ContainerPort: 8080
+            - ContainerPort: 8082
           LogConfiguration:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
+      Volumes:
+        - Name: h2-persistence
+          DockerVolumeConfiguration:
+            Autoprovision: true
+            Driver: local
+            DriverOpts:
+              type: nfs
+              device: !Sub "${FileSystem}.efs.${AWS::Region}.amazonaws.com:/"
+              o: !Sub "addr=${FileSystem}.efs.${AWS::Region}.amazonaws.com,nfsvers=4.0,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2"
+            Labels:
+              name: h2-persistence
+            Scope: shared
 
   CloudWatchLogsGroup:
     Type: AWS::Logs::LogGroup
@@ -113,38 +128,38 @@ Resources:
       LogGroupName: !Ref AWS::StackName
       RetentionInDays: 365
 
-  TargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      VpcId: !Ref VPC
-      Port: 8080
-      Protocol: HTTP
-      Matcher:
-        HttpCode: 200-499
-      TargetType: ip
-      HealthCheckIntervalSeconds: 30
-      HealthCheckPath: '/login'
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 15
-      HealthyThresholdCount: 2
-      TargetGroupAttributes:
-        - Key: stickiness.enabled
-          Value: true
-        - Key: stickiness.type
-          Value: lb_cookie
+#  TargetGroup:
+#    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+#    Properties:
+#      VpcId: !Ref VPC
+#      Port: 8082
+#      Protocol: HTTP
+#      Matcher:
+#        HttpCode: 200-499
+#      TargetType: ip
+#      HealthCheckIntervalSeconds: 30
+#      HealthCheckPath: '/login'
+#      HealthCheckProtocol: HTTP
+#      HealthCheckTimeoutSeconds: 15
+#      HealthyThresholdCount: 2
+#      TargetGroupAttributes:
+#        - Key: stickiness.enabled
+#          Value: true
+#        - Key: stickiness.type
+#          Value: lb_cookie
 
-  ListenerRule:
-    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-    Properties:
-      ListenerArn: !Ref Listener
-      Priority: 3
-      Conditions:
-        - Field: path-pattern
-          Values:
-            - '/*'
-      Actions:
-        - TargetGroupArn: !Ref TargetGroup
-          Type: forward
+#  ListenerRule:
+#    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+#    Properties:
+#      ListenerArn: !Ref Listener
+#      Priority: 3
+#      Conditions:
+#        - Field: path-pattern
+#          Values:
+#            - '/*'
+#      Actions:
+#        - TargetGroupArn: !Ref TargetGroup
+#          Type: forward
 
   # This IAM Role grants the service access to register/unregister with the
   # Application Load Balancer (ALB). It is based on the default documented here:
