@@ -188,6 +188,8 @@ Resources:
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn:
+    - ConfigService
 
   IkasanDashboard:
     Type: AWS::CloudFormation::Stack
@@ -206,7 +208,6 @@ Resources:
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
     - IkasanSolr
-    - ConfigService
     - DashboardH2
 
 #  WebsiteService:
