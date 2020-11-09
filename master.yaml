@@ -85,12 +85,34 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
 
-  EFS:
+  EFS-INDEX:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
       Parameters:
-        FileSystemName: ikasan-fs
+        FileSystemName: ikasan-index-fs
+        VpcId: !GetAtt VPC.Outputs.VPC
+        MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
+        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
+        OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+
+  EFS-CONFIG:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
+      Parameters:
+        FileSystemName: ikasan-config-fs
+        VpcId: !GetAtt VPC.Outputs.VPC
+        MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
+        MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
+        OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+
+  EFS-DATA:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/elastic-file-system.yaml
+      Parameters:
+        FileSystemName: ikasan-data-fs
         VpcId: !GetAtt VPC.Outputs.VPC
         MountTarget1Subnet: !GetAtt VPC.Outputs.PrivateSubnet1
         MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
@@ -129,7 +151,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 2
         Path: /config-server
-        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        FileSystem: !GetAtt EFS-CONFIG.Outputs.FileSystemId
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
@@ -145,7 +167,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 1
         Path: /ikasan-solr
-        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        FileSystem: !GetAtt EFS-INDEX.Outputs.FileSystemId
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
@@ -161,7 +183,7 @@ Resources:
         Listener: !GetAtt ALB.Outputs.Listener
         DesiredCount: 2
         Path: /ikasan-dashboard
-        FileSystem: !GetAtt EFS.Outputs.FileSystemId
+        FileSystem: !GetAtt EFS-DATA.Outputs.FileSystemId
         PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
         PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
