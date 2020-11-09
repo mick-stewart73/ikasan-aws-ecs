@@ -255,7 +255,7 @@ Outputs:
     Description: The Group ID for the FileSystem Mount Targets Security Group
     Value: !GetAtt MountTargetSecurityGroup.GroupId
     Export:
-      Name: '${AWS::StackName}${FileSystemName}MountTargetSecurityGroupId'
+      Name: !Sub '${AWS::StackName}${FileSystemName}MountTargetSecurityGroupId'
 
   MountTarget1:
     Description: The Resource ID for the first FileSystem Mount Target
