@@ -77,11 +77,11 @@ Resources:
             - !Ref PrivateSubnetOne
             - !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: jms-im
-      LoadBalancers:
-        - ContainerName: "jms-im"
-          ContainerPort: 8080
-          TargetGroupArn: !Ref TargetGroup
+      ServiceName: murex-trade
+#      LoadBalancers:
+#        - ContainerName: "murex-trade"
+#          ContainerPort: 8080
+#          TargetGroupArn: !Ref TargetGroup
       ServiceRegistries:
         - RegistryArn: !GetAtt DiscoveryService.Arn
           Port: 80
@@ -89,19 +89,19 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: jms-im
+      Family: murex-trade
       NetworkMode: awsvpc
       ContainerDefinitions:
-        - Name: jms-im
+        - Name: murex-trade
           MountPoints:
             - SourceVolume: "h2-persistence"
               ContainerPath: "/opt/data"
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/jms-dist
+          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/murex-trade
           Memory: 256
           Environment:
             - Name: MODULE_NAME
-              Value: jms-im
+              Value: murex-trade
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
@@ -118,7 +118,7 @@ Resources:
           Memory: 128
           Environment:
             - Name: MODULE_NAME
-              Value: jms-im
+              Value: murex-trade
           PortMappings:
             - ContainerPort: 8082
           LogConfiguration:
@@ -145,38 +145,38 @@ Resources:
       LogGroupName: !Ref AWS::StackName
       RetentionInDays: 365
 
-  TargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      VpcId: !Ref VPC
-      Port: 8080
-      Protocol: HTTP
-      Matcher:
-        HttpCode: 200-499
-      TargetType: ip
-      HealthCheckIntervalSeconds: 30
-      HealthCheckPath: '/login'
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 15
-      HealthyThresholdCount: 2
-      TargetGroupAttributes:
-        - Key: stickiness.enabled
-          Value: true
-        - Key: stickiness.type
-          Value: lb_cookie
-
-  ListenerRule:
-    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-    Properties:
-      ListenerArn: !Ref Listener
-      Priority: 3
-      Conditions:
-        - Field: path-pattern
-          Values:
-            - '/*'
-      Actions:
-        - TargetGroupArn: !Ref TargetGroup
-          Type: forward
+#  TargetGroup:
+#    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+#    Properties:
+#      VpcId: !Ref VPC
+#      Port: 8080
+#      Protocol: HTTP
+#      Matcher:
+#        HttpCode: 200-499
+#      TargetType: ip
+#      HealthCheckIntervalSeconds: 30
+#      HealthCheckPath: '/login'
+#      HealthCheckProtocol: HTTP
+#      HealthCheckTimeoutSeconds: 15
+#      HealthyThresholdCount: 2
+#      TargetGroupAttributes:
+#        - Key: stickiness.enabled
+#          Value: true
+#        - Key: stickiness.type
+#          Value: lb_cookie
+#
+#  ListenerRule:
+#    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+#    Properties:
+#      ListenerArn: !Ref Listener
+#      Priority: 3
+#      Conditions:
+#        - Field: path-pattern
+#          Values:
+#            - '/*'
+#      Actions:
+#        - TargetGroupArn: !Ref TargetGroup
+#          Type: forward
 
   # This IAM Role grants the service access to register/unregister with the
   # Application Load Balancer (ALB). It is based on the default documented here:
