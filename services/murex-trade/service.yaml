@@ -64,7 +64,7 @@ Resources:
 
   Service:
     Type: AWS::ECS::Service
-    DependsOn: ListenerRule
+#    DependsOn: ListenerRule
     Properties:
       Cluster: !Ref Cluster
       DesiredCount: !Ref DesiredCount
