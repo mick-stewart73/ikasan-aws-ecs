@@ -192,8 +192,8 @@ Resources:
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
     - IkasanSolr
-#    - DashboardH2
-    - ConfigService
+    - DashboardH2
+#    - ConfigService
 
   LifecycleHook:
     Type: AWS::CloudFormation::Stack
