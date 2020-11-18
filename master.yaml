@@ -125,6 +125,17 @@ Resources:
         MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
         OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
 
+  MQBROKER:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/amazon-mq.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        AmazonMQBrokerUser: 'ikasan-mq'
+        AmazonMQBrokerPassword: '1ka5an-br0k3r-pa55w0rd'
+
   ConfigService:
     Type: AWS::CloudFormation::Stack
     Properties:
