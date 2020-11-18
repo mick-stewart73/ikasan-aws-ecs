@@ -1,5 +1,5 @@
 Description: >
-  This template deploys an ECS cluster to the provided VPC and subnets
+  This template deploys an ECS cluster to the provided VPC and sub nets
   using an Auto Scaling Group
 
 Parameters:
@@ -135,22 +135,6 @@ Resources:
     Properties:
       Name: ikasan.cloud.org
       Vpc: !Ref VPC
-
-#  DiscoveryService:
-#    Type: AWS::ServiceDiscovery::Service
-#    Properties:
-#      Description: Discovery Service for the Ikasan stack
-#      DnsConfig:
-#        RoutingPolicy: MULTIVALUE
-#        DnsRecords:
-#          - TTL: 60
-#            Type: A
-#          - TTL: 60
-#            Type: SRV
-#      HealthCheckCustomConfig:
-#        FailureThreshold: 1
-##      Name: ikasan-service
-#      NamespaceId: !Ref PrivateNamespace
 
   # This IAM Role is attached to all of the ECS hosts. It is based on the default role
   # published here:

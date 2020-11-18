@@ -1,6 +1,6 @@
 Description: >
   This template contains the security groups required by our entire stack.
-  We create them in a seperate nested template, so they can be referenced
+  We create them in a separate nested template, so they can be referenced
   by all of the other nested templates.
 
 Parameters:
@@ -60,6 +60,15 @@ Resources:
         - IpProtocol: tcp
           FromPort: 8080
           ToPort: 8080
+          CidrIp: 10.180.32.0/21
+          # Allow access to the h2 dashboard instances from the private subnets
+        - IpProtocol: tcp
+          FromPort: 8082
+          ToPort: 8082
+          CidrIp: 10.180.24.0/21
+        - IpProtocol: tcp
+          FromPort: 8082
+          ToPort: 8082
           CidrIp: 10.180.32.0/21
       Tags:
         - Key: Name

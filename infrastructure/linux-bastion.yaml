@@ -11,7 +11,7 @@ Metadata:
           - VPCID
           - PublicSubnet1ID
           - PublicSubnet2ID
-          - RemoteAccessCIDR
+          - RemoteAccessBastionSecurityGroup
       - Label:
           default: Amazon EC2 configuration
         Parameters:

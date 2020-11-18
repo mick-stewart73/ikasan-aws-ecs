@@ -1,18 +1,26 @@
 Description: >
 
-  This template deploys a VPC, with a pair of public and private subnets spread 
-  across two Availabilty Zones. It deploys an Internet Gateway, with a default 
-  route on the public subnets. It deploys a pair of NAT Gateways (one in each AZ), 
-  and default routes for them in the private subnets.
+  This Cloud Formation template is the master template providing an AWS environment supporting base Ikasan Cloud services.
 
-  It then deploys a highly available ECS cluster using an AutoScaling Group, with 
-  ECS hosts distributed across multiple Availability Zones. 
+  It deploys the following:
+    - A Virtual Private Clout (VPC), with a pair of public and private sub nets spread across two Availability Zones.
+    - An Internet Gateway, with a default route onto the public sub nets.
+    - A pair of NAT Gateways (one in each AZ), and default routes for them into the private sub nets.
+    - A highly available Elastic Container Service (ECS) cluster using an AutoScaling Group, with ECS hosts distributed across multiple Availability Zones.
+    - 3 Elastic File Systems (EFS) volumes, ikasan-index-fs, ikasan-config-fs and ikasan-data-fs. These volumes can be mounted onto container file systems
+      in order to provide persistent storage.
+    - A container Discovery Service with containers addressed by <service-name>.ikasan.cloud.org.
+    - An Application Load Balancer providing sticky session load balancing across multiple instances of the Ikasan Dashboard.
 
-  Finally, it deploys a pair of example ECS services from containers published in 
-  Amazon EC2 Container Registry (Amazon ECR).
+  Finally, it deploys the following base Ikasan services from containers published in Amazon EC2 Container Registry (Amazon ECR).
+    - A configurable number of instances of the configuration service. This is backed by a git repository.
+    - A single solr instance backed by persistent disk.
+    - A single h2 service for the Ikasan Dashboard with the database file backed by persistent disk.
+    - A configurable number of Ikasan Dashboard instances access via a sticky session load balancer.
 
-  Last Modified: 22nd September 2016
-  Author: Paul Maddox <pmaddox@amazon.com>
+  All nested templates accept input parameters allowing for the size realised VPC to be scaled as required. For example a development instance of the VPC
+  might only contain 2 ECS hosts, whereas a production instance might contain 8 ECS hosts. The physical size of these hosts can also be configured via these
+  parameters. Each nested template provides details of the parameters that it accepts.
 
 Resources:
   VPC:
@@ -33,7 +41,7 @@ Resources:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/linux-bastion.yaml
       Parameters:
         BastionHostName: ikasan-bastion
-        BastionBanner: IKASAN AWS STACK
+        BastionBanner: IKASAN CLOUD
         EnableBanner: true
         EnableTCPForwarding: false
         EnableX11Forwarding: false
@@ -118,29 +126,6 @@ Resources:
         MountTarget2Subnet: !GetAtt VPC.Outputs.PrivateSubnet2
         OriginSecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
 
-#  ProductService:
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/product-service/service.yaml
-#      Parameters:
-#        VPC: !GetAtt VPC.Outputs.VPC
-#        Cluster: !GetAtt ECS.Outputs.Cluster
-#        DesiredCount: 2
-#        Listener: !GetAtt ALB.Outputs.Listener
-#        Path: /products
-
-#  H2Service:
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/h2/service.yaml
-#      Parameters:
-#        VPC: !GetAtt VPC.Outputs.VPC
-#        Cluster: !GetAtt ECS.Outputs.Cluster
-#        Listener: !GetAtt ALB.Outputs.Listener
-#        DesiredCount: 1
-#        Path: /h2
-#        FileSystem: !GetAtt EFS.Outputs.FileSystemId
-
   ConfigService:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -173,23 +158,23 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
 
-  DashboardH2:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/dashboard-h2/service.yaml
-      Parameters:
-        VPC: !GetAtt VPC.Outputs.VPC
-        Cluster: !GetAtt ECS.Outputs.Cluster
-        Listener: !GetAtt ALB.Outputs.Listener
-        DesiredCount: 2
-        Path: /dashboard-h2
-        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
-        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
-        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
-        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
-        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
-    DependsOn:
-    - ConfigService
+#  DashboardH2:
+#    Type: AWS::CloudFormation::Stack
+#    Properties:
+#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/dashboard-h2/service.yaml
+#      Parameters:
+#        VPC: !GetAtt VPC.Outputs.VPC
+#        Cluster: !GetAtt ECS.Outputs.Cluster
+#        Listener: !GetAtt ALB.Outputs.Listener
+#        DesiredCount: 1
+#        Path: /dashboard-h2
+#        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+#        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+#        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+#        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+#        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+#    DependsOn:
+#    - ConfigService
 
   IkasanDashboard:
     Type: AWS::CloudFormation::Stack
@@ -208,21 +193,8 @@ Resources:
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
     - IkasanSolr
-    - DashboardH2
-
-#  WebsiteService:
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/website-service/service.yaml
-#      Parameters:
-#        VPC: !GetAtt VPC.Outputs.VPC
-#        Cluster: !GetAtt ECS.Outputs.Cluster
-#        DesiredCount: 2
-#        ProductServiceUrl:
-#          !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
-#        Listener: !GetAtt ALB.Outputs.Listener
-#        Path: /
-#        ECSServiceAutoScalingRoleARN: !GetAtt ECS.Outputs.ECSServiceAutoScalingRole
+#    - DashboardH2
+    - ConfigService
 
   LifecycleHook:
     Type: AWS::CloudFormation::Stack
@@ -233,14 +205,7 @@ Resources:
         ECSAutoScalingGroupName: !GetAtt ECS.Outputs.ECSAutoScalingGroupName
 
 Outputs:
-#  ProductServiceUrl:
-#    Description: The URL endpoint for the product service
-#    Value: !Join ["/", [!GetAtt ALB.Outputs.LoadBalancerUrl, "products"]]
-#
-#  WebsiteServiceUrl:
-#    Description: The URL endpoint for the website service
-#    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]
 
-  ConfigServiceUrl:
+  IkasanDashboardUrl:
     Description: Config servcice URL
-    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, "/"]]
+    Value: !Join ["", [!GetAtt ALB.Outputs.LoadBalancerUrl, ":8080/"]]
