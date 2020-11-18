@@ -204,7 +204,6 @@ Resources:
     DependsOn:
     - IkasanSolr
     - DashboardH2
-#    - ConfigService
 
   MurexTrade:
     Type: AWS::CloudFormation::Stack
