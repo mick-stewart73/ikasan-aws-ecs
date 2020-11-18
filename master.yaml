@@ -2,21 +2,21 @@ Description: >
 
   This Cloud Formation template is the master template providing an AWS environment supporting base Ikasan Cloud services.
 
-  It deploys the following:
-    - A Virtual Private Clout (VPC), with a pair of public and private sub nets spread across two Availability Zones.
-    - An Internet Gateway, with a default route onto the public sub nets.
-    - A pair of NAT Gateways (one in each AZ), and default routes for them into the private sub nets.
-    - A highly available Elastic Container Service (ECS) cluster using an AutoScaling Group, with ECS hosts distributed across multiple Availability Zones.
-    - 3 Elastic File Systems (EFS) volumes, ikasan-index-fs, ikasan-config-fs and ikasan-data-fs. These volumes can be mounted onto container file systems
-      in order to provide persistent storage.
-    - A container Discovery Service with containers addressed by <service-name>.ikasan.cloud.org.
-    - An Application Load Balancer providing sticky session load balancing across multiple instances of the Ikasan Dashboard.
+#  It deploys the following:
+#    - A Virtual Private Clout (VPC), with a pair of public and private sub nets spread across two Availability Zones.
+#    - An Internet Gateway, with a default route onto the public sub nets.
+#    - A pair of NAT Gateways (one in each AZ), and default routes for them into the private sub nets.
+#    - A highly available Elastic Container Service (ECS) cluster using an AutoScaling Group, with ECS hosts distributed across multiple Availability Zones.
+#    - 3 Elastic File Systems (EFS) volumes, ikasan-index-fs, ikasan-config-fs and ikasan-data-fs. These volumes can be mounted onto container file systems
+#      in order to provide persistent storage.
+#    - A container Discovery Service with containers addressed by <service-name>.ikasan.cloud.org.
+#    - An Application Load Balancer providing sticky session load balancing across multiple instances of the Ikasan Dashboard.
 
-  Finally, it deploys the following base Ikasan services from containers published in Amazon EC2 Container Registry (Amazon ECR).
-    - A configurable number of instances of the configuration service. This is backed by a git repository.
-    - A single solr instance backed by persistent disk.
-    - A single h2 service for the Ikasan Dashboard with the database file backed by persistent disk.
-    - A configurable number of Ikasan Dashboard instances access via a sticky session load balancer.
+#  Finally, it deploys the following base Ikasan services from containers published in Amazon EC2 Container Registry (Amazon ECR).
+#    - A configurable number of instances of the configuration service. This is backed by a git repository.
+#    - A single solr instance backed by persistent disk.
+#    - A single h2 service for the Ikasan Dashboard with the database file backed by persistent disk.
+#    - A configurable number of Ikasan Dashboard instances access via a sticky session load balancer.
 
   All nested templates accept input parameters allowing for the size realised VPC to be scaled as required. For example a development instance of the VPC
   might only contain 2 ECS hosts, whereas a production instance might contain 8 ECS hosts. The physical size of these hosts can also be configured via these
