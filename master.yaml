@@ -1,7 +1,3 @@
-Description: >
-
-  This Cloud Formation template is the master template providing an AWS environment supporting base Ikasan Cloud services.
-
 #  It deploys the following:
 #    - A Virtual Private Clout (VPC), with a pair of public and private sub nets spread across two Availability Zones.
 #    - An Internet Gateway, with a default route onto the public sub nets.
@@ -18,6 +14,9 @@ Description: >
 #    - A single h2 service for the Ikasan Dashboard with the database file backed by persistent disk.
 #    - A configurable number of Ikasan Dashboard instances access via a sticky session load balancer.
 
+Description: >
+
+  This Cloud Formation template is the master template providing an AWS environment supporting base Ikasan Cloud services.
   All nested templates accept input parameters allowing for the size realised VPC to be scaled as required. For example a development instance of the VPC
   might only contain 2 ECS hosts, whereas a production instance might contain 8 ECS hosts. The physical size of these hosts can also be configured via these
   parameters. Each nested template provides details of the parameters that it accepts.
