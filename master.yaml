@@ -87,7 +87,7 @@ Resources:
         EnvironmentName: !Ref AWS::StackName
         KeyName: eu-west-1
         InstanceType: t2.medium
-        ClusterSize: 4
+        ClusterSize: 8
         VPC: !GetAtt VPC.Outputs.VPC
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         Subnets: !GetAtt VPC.Outputs.PrivateSubnets
