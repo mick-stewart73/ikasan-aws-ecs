@@ -1,6 +1,6 @@
 Description: >
   This template deploys an ECS cluster to the provided VPC and sub nets
-  using an Auto Scaling Group
+  using an Auto Scaling Group to run Ikasan Cloud services.
 
 Parameters:
   KeyName:

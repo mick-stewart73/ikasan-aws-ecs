@@ -1,5 +1,5 @@
 Description: >
-  AWS CloudFormation template to launch resources for Ikasan Elastic File System.
+  AWS CloudFormation template to launch resources for Ikasan Cloud Elastic File System.
 
 Parameters:
 
