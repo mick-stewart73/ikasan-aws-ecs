@@ -1,5 +1,5 @@
 Description: >
-  This is the murex-trade integration module service.
+  This is the murex-position integration module service.
 
 Parameters:
   VPC:
@@ -59,7 +59,7 @@ Resources:
             Type: SRV
       HealthCheckCustomConfig:
         FailureThreshold: 1
-      Name: murex-trade
+      Name: murex-position
       NamespaceId: !Ref PrivateNamespace
 
   Service:
@@ -76,7 +76,7 @@ Resources:
             - !Ref PrivateSubnetOne
             - !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
-      ServiceName: murex-trade
+      ServiceName: murex-position
       ServiceRegistries:
         - RegistryArn: !GetAtt DiscoveryService.Arn
           Port: 80
@@ -84,19 +84,19 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: murex-trade
+      Family: murex-position
       NetworkMode: awsvpc
       ContainerDefinitions:
-        - Name: murex-trade
+        - Name: murex-position
           MountPoints:
             - SourceVolume: "h2-persistence"
               ContainerPath: "/opt/data"
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/murex-trade
+          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/murex-position
           Memory: 256
           Environment:
             - Name: MODULE_NAME
-              Value: murex-trade
+              Value: murex-position
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
@@ -113,7 +113,7 @@ Resources:
           Memory: 128
           Environment:
             - Name: MODULE_NAME
-              Value: murex-trade
+              Value: murex-position
           PortMappings:
             - ContainerPort: 8082
           LogConfiguration:
