@@ -59,7 +59,7 @@ Resources:
             Type: SRV
       HealthCheckCustomConfig:
         FailureThreshold: 1
-      Name: ikasan-dashboard
+      Name: murex-trade
       NamespaceId: !Ref PrivateNamespace
 
   Service:
