@@ -1,5 +1,5 @@
 Description: >
-  Test
+  AWS CloudFormation template to launch resources for Ikasan Elastic File System.
 
 Parameters:
 

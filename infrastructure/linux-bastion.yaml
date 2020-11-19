@@ -1,6 +1,5 @@
-#  https://github.com/aws-quickstart/quickstart-linux-bastion/blob/main/templates/linux-bastion.template
 AWSTemplateFormatVersion: 2010-09-09
-Description: LinuxBastion+VPC Jul,30,2020 (qs-1qup6ra99) (Please do not remove)
+Description: AWS CloudFormation template to bastion server resources for Ikasan Cloud.
 Metadata:
   LICENSE: Apache License, Version 2.0
   'AWS::CloudFormation::Interface':

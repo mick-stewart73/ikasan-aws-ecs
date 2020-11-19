@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: AWS CloudFormation template to launch resources for the Amazon MQ workshop.
+Description: AWS CloudFormation template to launch resources for Ikasan Amazon MQ.
 
 Metadata:
   AWS::CloudFormation::Interface:
