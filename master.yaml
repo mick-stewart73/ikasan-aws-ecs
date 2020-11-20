@@ -131,8 +131,8 @@ Resources:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/infrastructure/amazon-mq.yaml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
-        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
-        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PublicSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PublicSubnet2
         AmazonMQBrokerUser: 'ikasan-mq'
         AmazonMQBrokerPassword: '1ka5an-br0k3r-pa55w0rd'
 
