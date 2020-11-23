@@ -64,7 +64,6 @@ Resources:
 
   Service:
     Type: AWS::ECS::Service
-#    DependsOn: ListenerRule
     Properties:
       Cluster: !Ref Cluster
       DesiredCount: !Ref DesiredCount
@@ -78,10 +77,6 @@ Resources:
             - !Ref PrivateSubnetTwo
       TaskDefinition: !Ref TaskDefinition
       ServiceName: dashboard-h2
-#      LoadBalancers:
-#        - ContainerName: "dashboard-h2"
-#          ContainerPort: 8082
-#          TargetGroupArn: !Ref TargetGroup
       ServiceRegistries:
         - RegistryArn: !GetAtt DiscoveryService.Arn
           Port: 80
@@ -128,38 +123,6 @@ Resources:
       LogGroupName: !Ref AWS::StackName
       RetentionInDays: 365
 
-#  TargetGroup:
-#    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-#    Properties:
-#      VpcId: !Ref VPC
-#      Port: 8082
-#      Protocol: HTTP
-#      Matcher:
-#        HttpCode: 200-499
-#      TargetType: ip
-#      HealthCheckIntervalSeconds: 30
-#      HealthCheckPath: '/login'
-#      HealthCheckProtocol: HTTP
-#      HealthCheckTimeoutSeconds: 15
-#      HealthyThresholdCount: 2
-#      TargetGroupAttributes:
-#        - Key: stickiness.enabled
-#          Value: true
-#        - Key: stickiness.type
-#          Value: lb_cookie
-
-#  ListenerRule:
-#    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-#    Properties:
-#      ListenerArn: !Ref Listener
-#      Priority: 3
-#      Conditions:
-#        - Field: path-pattern
-#          Values:
-#            - '/*'
-#      Actions:
-#        - TargetGroupArn: !Ref TargetGroup
-#          Type: forward
 
   # This IAM Role grants the service access to register/unregister with the
   # Application Load Balancer (ALB). It is based on the default documented here:

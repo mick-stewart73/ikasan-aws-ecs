@@ -221,6 +221,24 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
+      - MurexTradeH2
+
+  MurexTradeH2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/murex-trade/h2-service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /murex-trade-h2
+        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn:
       - IkasanDashboard
 
   MurexPosition:
@@ -239,12 +257,48 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
+      - MurexPositionH2
+
+  MurexPositionH2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/murex-position/h2-service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /murex-position-h2
+        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn:
       - IkasanDashboard
 
   TrebdiTrade:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/trebdi-trade/service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /trebdi-trade
+        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn:
+      - TrebdiTradeH2
+
+  TrebdiTradeH2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/trebdi-trade/h2-service.yaml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
@@ -275,7 +329,26 @@ Resources:
         SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
         PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
     DependsOn:
+      - PmePositionH2
+
+  PmePositionH2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/pme-position/-h2service.yaml
+      Parameters:
+        VPC: !GetAtt VPC.Outputs.VPC
+        Cluster: !GetAtt ECS.Outputs.Cluster
+        Listener: !GetAtt ALB.Outputs.Listener
+        DesiredCount: 1
+        Path: /pme-position
+        FileSystem: !GetAtt EFSDATA.Outputs.FileSystemId
+        PrivateSubnetOne: !GetAtt VPC.Outputs.PrivateSubnet1
+        PrivateSubnetTwo: !GetAtt VPC.Outputs.PrivateSubnet2
+        SecurityGroup: !GetAtt SecurityGroups.Outputs.ECSHostSecurityGroup
+        PrivateNamespace: !GetAtt ECS.Outputs.PrivateNamespace
+    DependsOn:
       - IkasanDashboard
+
 
   MessageGenerator:
     Type: AWS::CloudFormation::Stack
