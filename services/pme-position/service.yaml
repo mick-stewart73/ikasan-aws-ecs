@@ -101,9 +101,9 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
-          DependsOn:
-            - ContainerName: pme-position-h2-db
-              Condition: START
+#          DependsOn:
+#            - ContainerName: pme-position-h2-db
+#              Condition: START
 #        - Name: h2-db
 #          MountPoints:
 #            - SourceVolume: "pme-position-h2-persistence"

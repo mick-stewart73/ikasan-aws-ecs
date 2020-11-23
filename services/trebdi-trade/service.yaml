@@ -101,9 +101,9 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
-          DependsOn:
-            - ContainerName: trebdi-trade-h2-db
-              Condition: START
+#          DependsOn:
+#            - ContainerName: trebdi-trade-h2-db
+#              Condition: START
 #        - Name: h2-db
 #          MountPoints:
 #            - SourceVolume: "trebdi-trade-h2-persistence"
