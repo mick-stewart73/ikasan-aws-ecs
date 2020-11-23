@@ -1,5 +1,5 @@
 Description: >
-  This is the configuration service used by Ikasan.
+  This is the Ikasan dashboard H2 service.
 
 Parameters:
   VPC:
