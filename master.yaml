@@ -334,7 +334,7 @@ Resources:
   PmePositionH2:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/pme-position/-h2service.yaml
+      TemplateURL: https://ikasan-ecs-deployment.s3-eu-west-1.amazonaws.com/services/pme-position/h2-service.yaml
       Parameters:
         VPC: !GetAtt VPC.Outputs.VPC
         Cluster: !GetAtt ECS.Outputs.Cluster
