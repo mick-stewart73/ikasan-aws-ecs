@@ -84,7 +84,7 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: murex-position
+      Family: murex-position-h2-db
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: murex-position-h2-db

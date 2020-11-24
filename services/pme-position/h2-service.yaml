@@ -84,7 +84,7 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: pme-position
+      Family: pme-position-h2-db
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: pme-position-h2-db

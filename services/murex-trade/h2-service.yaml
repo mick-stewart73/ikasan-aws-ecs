@@ -84,7 +84,7 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: murex-trade
+      Family: murex-trade-h2-db
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: murex-trade-h2-db
