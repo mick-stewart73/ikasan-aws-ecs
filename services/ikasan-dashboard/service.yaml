@@ -109,9 +109,6 @@ Resources:
             Options:
               awslogs-group: !Ref CloudWatchLogsGroup
               awslogs-region: !Ref AWS::Region
-          DependsOn:
-            - ContainerName: h2-db
-              Condition: START
       Volumes:
         - Name: image-persistence
           DockerVolumeConfiguration:
