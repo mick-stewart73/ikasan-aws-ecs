@@ -94,7 +94,7 @@ Resources:
       ContainerDefinitions:
         - Name: cactus-designer
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/cactus-designer
+            Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/cactus-designer
           Memory: 512
           Environment:
             - Name: MODULE_NAME
@@ -138,7 +138,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       ListenerArn: !Ref Listener
-      Priority: 3
+      Priority: 4
       Conditions:
         - Field: path-pattern
           Values:
