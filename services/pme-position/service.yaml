@@ -93,7 +93,7 @@ Resources:
           Memory: 512
           Environment:
             - Name: MODULE_NAME
-              Value: gloss-trade
+              Value: pme-position
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
