@@ -89,11 +89,11 @@ Resources:
       ContainerDefinitions:
         - Name: pme-position
           Essential: true
-          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/pme-position
+          Image: 824226217436.dkr.ecr.eu-west-1.amazonaws.com/gloss-trade
           Memory: 512
           Environment:
             - Name: MODULE_NAME
-              Value: pme-position
+              Value: gloss-trade
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
