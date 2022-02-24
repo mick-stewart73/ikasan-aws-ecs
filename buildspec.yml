@@ -3,8 +3,8 @@ version: 0.2
 env:
   variables:
     # This S3 stores the ECS Reference Architecture CloudFormation templates
-    # so that they can be deployed via a button on the project GitHub README
-    S3_BUCKET: "ikasan-ecs-deployment"
+    # so that they can be deployed via a button on the project GitHub README S3_BUCKET: "ikasan-ecs-deployment"
+    S3_BUCKET: "delta-mizuho-ikasan-ecs-deployment"
 
 phases:
 
